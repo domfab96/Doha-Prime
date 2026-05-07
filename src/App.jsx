@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import { StoreProvider }   from './context/StoreContext'
 import { ContentProvider } from './context/ContentContext'
 import Navbar    from './components/Navbar'
@@ -11,11 +12,21 @@ import Records   from './pages/Records'
 import Admin     from './pages/Admin'
 import Blog      from './pages/Blog'
 
+// Scrolls to top on every page navigation
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [pathname])
+  return null
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <StoreProvider>
         <ContentProvider>
+          <ScrollToTop />
           <div className="flex flex-col min-h-screen">
             <Navbar />
             <main className="flex-1">
